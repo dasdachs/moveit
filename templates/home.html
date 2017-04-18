@@ -1,0 +1,31 @@
+{% extends "layout.html"%}
+{% block body  %}
+
+<section class="hero is-primary">
+  <div class="container">
+    <div class="heading hero-body">
+      <h1 class="title">Add movements</h1>
+      <h2 class="subtitle">Movements are added by current time</h2>
+    </div>
+  </div>
+</section> <!-- end heading -->
+
+<section class="section" id="app">
+  <div class="block has-text-centered">
+    <button class="button is-success is-large" v-on:click="addMovement" type="submit"><span class="fa fa-plus"> Felt a movement</span></button>
+    <hr/>
+    <div class="box" v-for="movement in parsedDates">
+      <button class="button is-small is-danger is-pulled-right" v-on:click="removeMovement($index)" type="submit"><span class="fa fa-close"></span></button>
+      <div class="media-content">
+        <div class="content">
+          <p class="has-text-centered"><strong>Movement on</strong> [[ movement ]]
+        </div>
+      </div>
+    </div>
+    <div class="has-text-centered">
+      <a href="#" class="button is-success is-large" v-on:click="sendData">Submit</a>
+    </div>
+  </div>
+</section> <!-- end add movement -->
+
+{% endblock %}

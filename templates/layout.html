@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>I like to move it move it!</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% block css %}
+    {% endblock %}
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item">
+          <img src="{{ url_for('static', filename='img/julian_icon.png') }}" alt="MoveIt logo" />
+        </a>
+      </div>
+      <div class=" nav-center nav-menu">
+        <a href="{{ url_for('home') }}" class="nav-item">
+          MoveIt
+        </a>
+        <a href="{{ url_for('history') }}" class="nav-item">
+          History
+        </a>
+      </div>
+    </nav>
+
+     {% block body %}
+     {% endblock %}
+
+     <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            <strong>MoveIt</strong> by <a href="https://github.com/dasdachs">Jani Šumak</a>.
+          </p>
+          <p>
+            <a class="icon" href="https://github.com/dasdachs">
+              <i class="fa fa-github"></i>
+            </a>
+        </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{ url_for('static', filename='js/moments.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block js %}
+    {% endblock %}
+  </body>
+</html>

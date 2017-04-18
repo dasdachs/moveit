@@ -1,0 +1,54 @@
+{% extends "layout.html"%}
+{% block body  %}
+
+<section class="heading hero is-info">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Movements in the past
+      </h1>
+    </div>
+  </div>
+</section> <!-- end heading -->
+
+<section>
+  <canvas id="movements" width="300" height="300"></canvas>
+</section> <!-- end charts -->
+
+{% endblock %}
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script >
+  // Parse the data
+  var dates = {{ data | safe }}.map(function(x){
+    return moment(x.date);
+  });
+  var dayData = dates.map(function(x){return x.dayOfYear();});
+  var d = [];
+  for (var x = 0; x < dayData.length; x++) {
+    var el = d.find(function(y) {
+      return y.label === dayData[x].toString();
+    });
+    if (el === undefined) {
+      d.push(
+        {
+          label: dayData[x].toString(),
+          data: [1],
+          backgroundColor: "rgba(153,255,51,1)"
+        }
+      );
+    } else {
+      el.data[0] += 1;
+    }
+  };
+  // Plot the chart
+  var ctx = document.getElementById("movements").getContext('2d');
+  var myChart = new Chart(ctx,{
+    type: 'bar',
+    data: {
+      labels: d.map(function(x){return x.label;}),
+      datasets: d,
+    }
+   });
+</script>
+{% endblock %}

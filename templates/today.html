@@ -1,15 +1,18 @@
 {% extends "layout.html"%}
-{% block body  %}
-
+{% block body %}
 <section class="heading hero is-info">
   <div class="hero-body">
     <div class="container">
       <h1 class="title">
-        Movements in the past
+        Movements today
       </h1>
     </div>
   </div>
 </section> <!-- end heading -->
+
+<section class="container hero is-success">
+  <p class="has-text-centered" id="last-movement"></p>
+</section>
 
 <section class="container">
   <canvas id="movements"></canvas>
@@ -23,18 +26,20 @@
   var dates = {{ data | safe }}.map(function(x){
     return moment(x.date);
   });
-  var dayData = dates.map(function(x){return x.dayOfYear();});
+  // Insert data of last movement
+  var last = document.getElementById("last-movement");
+  last.innerHTML = "Last movement " + dates[0].fromNow();
+  var hourData = dates.map(function(x){return x.hour();});
   var d = [];
-  for (var x = 0; x < dayData.length; x++) {
+  for (var x = 0; x < hourData.length; x++) {
     var el = d.find(function(y) {
-      return y.label === dayData[x].toString();
+      return y.label === hourData[x].toString();
     });
     if (el === undefined) {
       d.push(
         {
-          label: dayData[x].toString(),
+          label: hourData[x].toString(),
           data: [1],
-          backgroundColor: "rgba(153,255,51,1)"
         }
       );
     } else {
@@ -44,7 +49,7 @@
   // Plot the chart
   var ctx = document.getElementById("movements").getContext('2d');
   var myChart = new Chart(ctx,{
-    type: 'bar',
+    type: 'pie',
     data: {
       labels: d.map(function(x){return x.label;}),
       datasets: d,
